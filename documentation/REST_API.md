@@ -1,16 +1,16 @@
-**GET localhost:8080/events** - Get all events from the database
+**1. GET localhost:8080/events** - Get all events from the database
 
 Response: 200 OK  
 Response body:  ...
 
 </br></br></br>
-**GET localhost:8080/events/{id}**  - Get the information of a single event based on event id
+**2. GET localhost:8080/events/{id}**  - Get the information of a single event based on event id
 
 Response: 200 OK  
 Response body: ...
 
 </br></br></br>
-**POST localhost:8080/login** - Log in with username and password.  
+**3. POST localhost:8080/login** - Log in with username and password.  
 
 </br>
 Request body:
@@ -35,7 +35,7 @@ Response body:
 ```
   
 </br></br></br>
-**POST localhost:8080/signUp** - Create a user account  
+**4. POST localhost:8080/signUp** - Create a user account  
 
 Request body:  
 ```
@@ -53,7 +53,7 @@ Response: 201 Created  </br>
 User created successfully  
   
 </br></br></br>
-**POST localhost:8080/events/{id}/register** - Register for an event   
+**5. POST localhost:8080/events/{id}/register** - Register for an event   
 
 Requires an Authorization token (Bearer Token) **OR** an email address  
 </br>
@@ -66,11 +66,11 @@ If the client is not logged in (does not have a token), a request body is requir
 }
 ```
 </br>
-Response: 201 Created  
+Response: 201 Created</br>  
 Response body:   ...
 
 </br></br></br>
-**POST localhost:8080/events/new** - Create a new event (client must be logged in)  
+**6. POST localhost:8080/events/new** - Create a new event (client must be logged in)  
 
 Requires an Authorization token (Bearer Token)   
 
@@ -117,7 +117,7 @@ Response body (example):
 }
 ```
 </br></br></br>
-**POST localhost:8080/events/{id}/cancelRegistration** - Cancel registration for an event (client must be logged in)  
+**7. POST localhost:8080/events/{id}/cancelRegistration** - Cancel registration for an event (client must be logged in)  
 
 Requires an Authorization token (Bearer Token)   
 
