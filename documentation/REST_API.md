@@ -1,5 +1,5 @@
 ### GET 
-__localhost:8080/events__ - Get all events from the database
+__localhost:8080/events__ - Get all events from the database\n
 
 Response: 200 OK
 Body:
