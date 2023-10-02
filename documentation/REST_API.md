@@ -21,11 +21,9 @@ __localhost:8080/login__ - Log in with username and password.
 Request:   
 
 {  
-
     "username": "",  
 
     "password": ""  
-
 }  
   
 
@@ -35,42 +33,56 @@ Response: 200 OK
 Body:  
 
 {  
-
     "accessToken": ""  
-
 }  
   
-  
+
 
 #### POST
-__localhost:8080/signUp__ - Create a user account
-Request: 
+__localhost:8080/signUp__ - Create a user account  
+
+Request:  
+
 {
     "username": "",
     "email": "",
     "password": ""
-}
+}  
+  
 
-Response: 201 Created
-Body: User created successfully
+
+Response: 201 Created  
+
+Body: User created successfully  
+  
+
 
 #### POST
-__localhost:8080/events/{id}/register__ - Register for an event 
-Requires an Authorization token (Bearer Token) ** OR ** an email address
+__localhost:8080/events/{id}/register__ - Register for an event   
 
-If the client is not logged in (does not have a token), email address is required:
-Request:
+Requires an Authorization token (Bearer Token) ** OR ** an email address  
+
+
+If the client is not logged in (does not have a token), email address is required:  
+
+Request:  
+
 {
     "email":""
 }
 
-Response: 201 Created
-Body: 
+Response: 201 Created  
+
+Body:   
+
 
 #### POST
-__localhost:8080/events/new__ - Create a new event (client must be logged in)
-Requires an Authorization token (Bearer Token) 
-Request:
+__localhost:8080/events/new__ - Create a new event (client must be logged in)  
+
+Requires an Authorization token (Bearer Token)   
+
+Request:  
+
 {
     "title": "",
     "description": "",
@@ -81,10 +93,15 @@ Request:
     "location": "",
     "image": "image url?",
     "maxParticipants": int
-}
+}  
 
-Response: 201 Created
-Body (example):
+
+
+
+Response: 201 Created  
+
+Body (example):  
+
 {
     "id": 9,
     "title": "Halloween",
@@ -101,12 +118,17 @@ Body (example):
     "maxParticipants": -1,
     "participantCount": 0
 }
+  
 
 #### POST
-__localhost:8080/events/{id}/cancelRegistration__ - Cancel registration for an event (client must be logged in)
-Requires an Authorization token (Bearer Token) 
+__localhost:8080/events/{id}/cancelRegistration__ - Cancel registration for an event (client must be logged in)  
 
-No request body
+Requires an Authorization token (Bearer Token)   
 
-Response: 200 OK
-Registration cancelled successfully
+
+No request body  
+
+
+Response: 200 OK  
+
+Registration cancelled successfully  
