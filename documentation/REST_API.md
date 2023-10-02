@@ -1,31 +1,48 @@
-### GET 
-__localhost:8080/events__ - Get all events from the database\n
+#### GET 
+__localhost:8080/events__ - Get all events from the database
 
-Response: 200 OK
-Body:
+Response: 200 OK  
 
-### GET
+Body:  
+
+
+#### GET
 __localhost:8080/events/{id}__ - Get the information of a single event based on event id
 
-Response: 200 OK
-Body:
+Response: 200 OK  
+
+Body:  
 
 
-### POST
-__localhost:8080/login__ - Log in with username and password.
-Request: 
-{
-    "username": "",
-    "password": ""
-}
 
-Response: 200 OK
-Body:
-{
-    "accessToken": ""
-}
+#### POST
+__localhost:8080/login__ - Log in with username and password.  
 
-### POST
+Request:   
+
+{  
+
+    "username": "",  
+
+    "password": ""  
+
+}  
+  
+
+
+Response: 200 OK  
+
+Body:  
+
+{  
+
+    "accessToken": ""  
+
+}  
+  
+  
+
+#### POST
 __localhost:8080/signUp__ - Create a user account
 Request: 
 {
@@ -37,7 +54,7 @@ Request:
 Response: 201 Created
 Body: User created successfully
 
-### POST
+#### POST
 __localhost:8080/events/{id}/register__ - Register for an event 
 Requires an Authorization token (Bearer Token) ** OR ** an email address
 
@@ -50,7 +67,7 @@ Request:
 Response: 201 Created
 Body: 
 
-### POST
+#### POST
 __localhost:8080/events/new__ - Create a new event (client must be logged in)
 Requires an Authorization token (Bearer Token) 
 Request:
@@ -85,7 +102,7 @@ Body (example):
     "participantCount": 0
 }
 
-### POST
+#### POST
 __localhost:8080/events/{id}/cancelRegistration__ - Cancel registration for an event (client must be logged in)
 Requires an Authorization token (Bearer Token) 
 
