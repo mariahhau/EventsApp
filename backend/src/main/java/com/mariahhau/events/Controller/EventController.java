@@ -106,7 +106,7 @@ public class EventController {
 
             if (eventService.cancelRegistrationForEvent(id, principal.getUserId()) == 0) {
             
-            return new ResponseEntity<String>("Registration cancelled successfully", HttpStatus.CREATED);
+            return new ResponseEntity<String>("Registration cancelled successfully", HttpStatus.OK);
         } else return new ResponseEntity<String>("Cancellation failed", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
