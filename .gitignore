@@ -35,6 +35,6 @@ build/
 ### ENV Files ###
 .env
 
-backend/src/main/resources/application.properties
+
 backend/.mvn/wrapper/maven-wrapper.jar
 backend/.mvn/wrapper/maven-wrapper.properties
