@@ -36,11 +36,11 @@ public class WebSecurityConfig {
         .formLogin().disable()
         .securityMatcher("/**")
         .authorizeHttpRequests(registry -> registry
-        .requestMatchers("/events").permitAll() //Makes this path accessible for everyone
-        .requestMatchers("/events/{id}").permitAll()
-        .requestMatchers("/events/{id}/register").permitAll()
-        .requestMatchers("/login").permitAll() 
-        .requestMatchers("/signUp").permitAll() 
+        .requestMatchers("api/events").permitAll() //Makes this path accessible for everyone
+        .requestMatchers("api/events/{id}").permitAll()
+        .requestMatchers("api/events/{id}/register").permitAll()
+        .requestMatchers("api/login").permitAll() 
+        .requestMatchers("api/signUp").permitAll() 
         .anyRequest().authenticated()); //User needs to be authenticated for any request that is not explicitly allowed
 
         return http.build();

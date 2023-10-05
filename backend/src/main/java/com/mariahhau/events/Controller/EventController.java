@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,7 +24,7 @@ import com.mariahhau.events.Service.EventService;
 
 @RestController // Marks this class as a request handler (@RestController combines @Controller and @ResponseBody)
 
-@RequestMapping("/events")
+@RequestMapping("api/events")
 public class EventController {
 
     @Autowired
@@ -52,15 +53,17 @@ public class EventController {
 
 
     //Create new event
-    @PostMapping("/new") //?
+    @PostMapping("") //?
     public ResponseEntity<Event> createEvent(@RequestBody Map<String, String> payload, @AuthenticationPrincipal UserPrincipal principal) {
          return new ResponseEntity<Event>(eventService.createEvent(payload, principal.getUsername()), HttpStatus.CREATED);
         
     }
 
+    
+
 
     //Register for an event
-    @PostMapping("/{id}/register")
+    @PostMapping("/{id}")
     public ResponseEntity<String> registerToEvent(@PathVariable long id, @AuthenticationPrincipal UserPrincipal principal, @RequestBody Optional<Map<String, String>> payload) {     
 
         if (principal == null){
@@ -94,7 +97,7 @@ public class EventController {
     }
 
 
-    @PostMapping("/{id}/cancelRegistration")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> cancelRegistrationForEvent(@PathVariable long id, @AuthenticationPrincipal UserPrincipal principal) {     
 
         if (principal == null){
@@ -110,6 +113,23 @@ public class EventController {
         } else return new ResponseEntity<String>("Cancellation failed", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    /*@PostMapping("/{id}/cancelRegistration")
+    public ResponseEntity<String> cancelRegistrationForEvent(@PathVariable long id, @AuthenticationPrincipal UserPrincipal principal) {     
+
+        if (principal == null){
+            System.out.println("principal was null \n\n");
+
+            return new ResponseEntity<String>("Cancellation failed", HttpStatus.INTERNAL_SERVER_ERROR);
+
+        } else {
+
+            if (eventService.cancelRegistrationForEvent(id, principal.getUserId()) == 0) {
+            
+            return new ResponseEntity<String>("Registration cancelled successfully", HttpStatus.OK);
+        } else return new ResponseEntity<String>("Cancellation failed", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }*/
     
     
 }

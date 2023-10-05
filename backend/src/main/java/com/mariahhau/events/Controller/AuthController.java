@@ -43,7 +43,7 @@ public class AuthController {
     private final UserServiceImpl userService;
 
   
-    @PostMapping("/login")
+    @PostMapping("api/login")
     public LoginResponse login(@RequestBody @Validated LoginRequest request){
         System.out.println("\nAuthController: login\n");
 
@@ -72,7 +72,7 @@ public class AuthController {
     }
 
     //Sign up 
-    @PostMapping("/signUp")
+    @PostMapping("api/signUp")
     public ResponseEntity<String> signUp(@RequestBody Map<String, String> payload) {
         User user = new User();
       
