@@ -35,24 +35,20 @@ public class EventController {
         return new ResponseEntity<List<Event>>(eventService.allEvents(), HttpStatus.OK);
     }
 
+    //@AuthenticationPrincipal annotation injects the currently authenticated user's UserDetails into the method
+    //Create new event
+    @PostMapping("") 
+    public ResponseEntity<Event> createEvent(@RequestBody Map<String, String> payload, @AuthenticationPrincipal UserPrincipal principal) {
+         return new ResponseEntity<Event>(eventService.createEvent(payload, principal.getUsername()), HttpStatus.CREATED);
+        
+    }
+
     //Get one event by id
     @GetMapping("/{id}")
     public ResponseEntity<Optional<Event>> getSingleEvent(@PathVariable long id) {
         return new ResponseEntity<Optional<Event>>(eventService.singleEvent(id), HttpStatus.OK);
 
     }
-
-
-    //@AuthenticationPrincipal annotation injects the currently authenticated user's UserDetails into the method
-    //Create new event
-    @PostMapping("") //?
-    public ResponseEntity<Event> createEvent(@RequestBody Map<String, String> payload, @AuthenticationPrincipal UserPrincipal principal) {
-         return new ResponseEntity<Event>(eventService.createEvent(payload, principal.getUsername()), HttpStatus.CREATED);
-        
-    }
-
-    
-
 
     //Register for an event
     @PostMapping("/{id}")
@@ -105,23 +101,6 @@ public class EventController {
         } else return new ResponseEntity<String>("Cancellation failed", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-    /*@PostMapping("/{id}/cancelRegistration")
-    public ResponseEntity<String> cancelRegistrationForEvent(@PathVariable long id, @AuthenticationPrincipal UserPrincipal principal) {     
-
-        if (principal == null){
-            System.out.println("principal was null \n\n");
-
-            return new ResponseEntity<String>("Cancellation failed", HttpStatus.INTERNAL_SERVER_ERROR);
-
-        } else {
-
-            if (eventService.cancelRegistrationForEvent(id, principal.getUserId()) == 0) {
-            
-            return new ResponseEntity<String>("Registration cancelled successfully", HttpStatus.OK);
-        } else return new ResponseEntity<String>("Cancellation failed", HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }*/
     
     
 }
