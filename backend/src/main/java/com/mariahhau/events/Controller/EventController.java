@@ -42,16 +42,8 @@ public class EventController {
 
     }
 
+
     //@AuthenticationPrincipal annotation injects the currently authenticated user's UserDetails into the method
-    //Test logging in
-    @GetMapping("/secured")
-    public String secured(@AuthenticationPrincipal UserPrincipal principal) {
-        if (principal == null) return "UserPrincipal was null";
-        return "You are logged in as user " + principal.getUsername() + " User ID: " + principal.getUserId();
-
-    }
-
-
     //Create new event
     @PostMapping("") //?
     public ResponseEntity<Event> createEvent(@RequestBody Map<String, String> payload, @AuthenticationPrincipal UserPrincipal principal) {
