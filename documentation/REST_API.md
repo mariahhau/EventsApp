@@ -3,74 +3,9 @@
 Response: 200 OK  
 Response body:  ...
 
-</br></br></br>
-**2. GET localhost:8080/api/events/{id}**  - Get the information of a single event based on event id
-
-Response: 200 OK  
-Response body: ...
 
 </br></br></br>
-**3. POST localhost:8080/api/login** - Log in with username and password.  
-
-</br>
-Request body:
-
-```
-{    
-
-    "username": "",  
-
-    "password": ""    
-
-}
-```
-</br></br>
-Response: 200 OK   
-Response body:
-```
-{    
-    "accessToken": ""    
-
-}
-```
-  
-</br></br></br>
-**4. POST localhost:8080/api/signUp** - Create a user account  
-
-Request body:  
-```
-{  
-
-    "username": "",
-    "email": "",
-    "password": ""  
-
-}  
-``` 
-
-
-Response: 201 Created  </br>
-User created successfully  
-  
-</br></br></br>
-**5. POST localhost:8080/api/events/{id}** - Register for an event   
-
-Requires an Authorization token (Bearer Token) **OR** an email address  
-</br>
-If the client is not logged in (does not have a token), a request body is required:  
-```
-{  
-
-    "email":""  
-
-}
-```
-</br>
-Response: 201 Created</br>  
-Response body:   ...
-
-</br></br></br>
-**6. POST localhost:8080/api/events** - Create a new event (client must be logged in)  
+**2. POST localhost:8080/api/events** - Create a new event (client must be logged in)  
 
 Requires an Authorization token (Bearer Token)   
 
@@ -116,8 +51,34 @@ Response body (example):
 
 }
 ```
+
 </br></br></br>
-**7. DELETE localhost:8080/api/events/{id}** - Cancel registration for an event (client must be logged in)  
+**3. GET localhost:8080/api/events/{id}**  - Get the information of a single event based on event id
+
+Response: 200 OK  
+Response body: ...
+
+</br></br></br>
+
+**4. POST localhost:8080/api/events/{id}** - Register for an event   
+
+Requires an Authorization token (Bearer Token) **OR** an email address  
+</br>
+If the client is not logged in (does not have a token), a request body is required:  
+```
+{  
+
+    "email":""  
+
+}
+```
+</br>
+Response: 201 Created</br>  
+Response body:   ...
+
+
+</br></br></br>
+**5. DELETE localhost:8080/api/events/{id}** - Cancel registration for an event (client must be logged in)  
 
 Requires an Authorization token (Bearer Token)   
 
@@ -127,3 +88,49 @@ No request body
 Response: 200 OK
 
 Registration cancelled successfully  
+
+</br></br></br>
+**6. POST localhost:8080/api/login** - Log in with username and password.  
+
+</br>
+Request body:
+
+```
+{    
+
+    "username": "",  
+
+    "password": ""    
+
+}
+```
+</br></br>
+Response: 200 OK   
+Response body:
+```
+{    
+    "accessToken": ""    
+
+}
+```
+  
+</br></br></br>
+**7. POST localhost:8080/api/signUp** - Create a user account  
+
+Request body:  
+```
+{  
+
+    "username": "",
+    "email": "",
+    "password": ""  
+
+}  
+``` 
+
+
+Response: 201 Created  </br>
+User created successfully  
+  
+</br></br></br>
+
