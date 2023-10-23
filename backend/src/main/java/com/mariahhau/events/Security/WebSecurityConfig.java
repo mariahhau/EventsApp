@@ -26,9 +26,8 @@ public class WebSecurityConfig {
     
     @Bean
     public SecurityFilterChain applicationSecurity(HttpSecurity http) throws Exception{    
-        System.out.println("WebSecurityConfig: applicationSecurity");
+        //TODO: fix deprecated methods
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-       //TODO: korjaa deprecated jutut
         http
         .cors().disable()
         .csrf().disable()
@@ -45,9 +44,6 @@ public class WebSecurityConfig {
 
         return http.build();
         
-
-
-
     }
 
     @Bean
