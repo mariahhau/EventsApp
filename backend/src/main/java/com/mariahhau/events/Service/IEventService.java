@@ -14,7 +14,7 @@ public interface IEventService {
 
     Integer registerForEvent(long eventId, long userId, String email);
 
-     Integer registerForEvent(long eventId, String email);
+    Integer registerForEvent(long eventId, String email);
 
     Integer cancelRegistrationForEvent(long eventId, long userId);
     

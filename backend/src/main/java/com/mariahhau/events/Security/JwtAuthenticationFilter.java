@@ -12,7 +12,6 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 
@@ -25,7 +24,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
-                System.out.println("JwtAuthenticationFilter: doFilterInternal");
                 
         extractTokenFromRequest(request)
                 .map(jwtDecoder::decode)
@@ -37,7 +35,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
     }
 
     private Optional<String> extractTokenFromRequest(HttpServletRequest request) {
-        System.out.println("JwtAuthenticationFilter: Extract token from request" + request.toString());
         var token = request.getHeader("Authorization");
         if (StringUtils.hasText(token) && token.startsWith("Bearer ")) {
             return Optional.of(token.substring(7));

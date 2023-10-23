@@ -25,57 +25,44 @@ public class UserPrincipal implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        System.out.println("UserPrincipal: getAuthorities");
         return authorities;
     }
 
     @Override
     public String getPassword() {
-        System.out.println("UserPrincipal: getPassword");
         return password;
     }
 
     @Override
     public String getUsername() {
-        System.out.println("UserPrincipal: getUsername " + username);
         return username;
     }
 
     public String getEmail() {
-        System.out.println("UserPrincipal: getEmail " + email);
         return email;
     }
 
     public Long getUserId() {
-        System.out.println("UserPrincipal: getUserId " + userId);
         return userId;
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        System.out.println("UserPrincipal:isAccountNonExpired");
-        // TODO Auto-generated method stub
         return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        System.out.println("UserPrincipal: isAccountNonLocked");
-        // TODO Auto-generated method stub
         return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        System.out.println("UserPrincipal: isCredentialsNonExpired");
-        // TODO Auto-generated method stub
         return true;
     }
 
     @Override
     public boolean isEnabled() {
-        System.out.println("UserPrincipal: isEnabled?");
-        // TODO Auto-generated method stub
         return true;
     }
     

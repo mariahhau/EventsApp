@@ -1,9 +1,6 @@
 package com.mariahhau.events.Security;
 
-import java.util.Collection;
-
 import org.springframework.security.authentication.AbstractAuthenticationToken;
-import org.springframework.security.core.GrantedAuthority;
 
 public class UserPrincipalAuthenticationToken extends AbstractAuthenticationToken {
 

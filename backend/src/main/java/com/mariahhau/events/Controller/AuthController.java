@@ -5,31 +5,24 @@ import com.mariahhau.events.Security.UserPrincipal;
 import com.mariahhau.events.Service.UserServiceImpl;
 import com.mariahhau.events.Utilities;
 
-import java.util.List;
 import java.util.Map;
-import java.util.regex.Pattern;
 
-import org.springframework.data.annotation.Id;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mariahhau.events.Database.Documents.User;
 import com.mariahhau.events.Model.LoginRequest;
 import com.mariahhau.events.Model.LoginResponse;
 
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -47,23 +40,18 @@ public class AuthController {
     public LoginResponse login(@RequestBody @Validated LoginRequest request){
         System.out.println("\nAuthController: login\n");
 
-        System.out.println("request.username: " + request.getUsername() + " pw:" + request.getPassword());
         var auth = authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
         );
-        System.out.println("auth: " + auth);
-        SecurityContextHolder.getContext().setAuthentication(auth); //TODO ?
+        SecurityContextHolder.getContext().setAuthentication(auth); 
 
         var principal = (UserPrincipal) auth.getPrincipal();
-        System.out.println("AuthController, principal " + principal + " id" + principal.getUserId());
 
-        
         var roles = principal.getAuthorities().stream()
             .map(GrantedAuthority::getAuthority)
             .toList();
 
         var token = jwtIssuer.issue(principal.getUserId(), principal.getUsername(), principal.getEmail(), roles);
-        System.out.println("token:" +token);
 
         return LoginResponse.builder()
         .accessToken(token)

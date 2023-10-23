@@ -11,11 +11,10 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 public class JwtToPrincipalConverter {
 
     public UserPrincipal convert(DecodedJWT jwt) {
-        System.out.println("JwtToPrincipalConverter: convert");
         return UserPrincipal.builder()
-        .userId(Long.valueOf(jwt.getSubject())) //TODO id?
+        .userId(Long.valueOf(jwt.getSubject()))
         .username(jwt.getClaim("u").asString())
-        .email(jwt.getClaim("e").asString()) //TODO ? 
+        .email(jwt.getClaim("e").asString()) 
         .authorities(extractAuthoritiesFromClaim(jwt))
         .build();
     }
