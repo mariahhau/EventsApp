@@ -17,8 +17,7 @@ import com.mariahhau.events.Database.Repositories.EventRepository;
 
 //This class contains methods for event management (CRUD)
 @Service //@Service annotation is used with classes that provide some business functionalities. 
-
-public class EventService {
+public class EventService implements IEventService {
 
     @Autowired //Spring instantiates this automatically
     private EventRepository eventRepository;
@@ -40,8 +39,7 @@ public class EventService {
 
      
     //Register for an event
-    //tarkista max participants
-    public Integer registerToEvent(long eventId, long userId, String email) throws NoSuchElementException {
+    public Integer registerForEvent(long eventId, long userId, String email) throws NoSuchElementException {
         System.out.println("registerToEvent(long, long, string), userId" + userId  );
         
         if (!eventRepository.findEventById(eventId).isPresent()) {
@@ -50,12 +48,9 @@ public class EventService {
             
             Event event = eventRepository.findEventById(eventId).orElseThrow();
             
-            
             if (!event.addParticipant(userId, email)) {
                 return -1;
-                
-            };
-            
+            }
             eventRepository.save(event);
         }
         return 0;
@@ -73,8 +68,6 @@ public class EventService {
             Event event = eventRepository.findEventById(eventId).orElseThrow();
 
             if (event.removeParticipant(userId).isPresent()) {
-                
-                System.out.println("remove participant EventService rivi 77 onko rikki");
                 eventRepository.save(event);
                 return 0;
                 
@@ -85,14 +78,11 @@ public class EventService {
         return -1;
     }
 
-    public Integer registerToEvent(long eventId, String email) throws NoSuchElementException {
-        System.out.println("registerToEvent(long, string)");
+    public Integer registerForEvent(long eventId, String email) throws NoSuchElementException {
         
         if (!eventRepository.findEventById(eventId).isPresent()) {
-            System.out.println("täälä");
             return -1;
         } else {
-            System.out.println("rivi 95");
             Event event = eventRepository.findEventById(eventId).orElseThrow();
             
             if (!event.addParticipant(email)) {
@@ -111,7 +101,7 @@ public class EventService {
      * example:
      * {
         "title": "Birthday Party",
-        "description": "Fun party yay",
+        "description": "Fun party",
         "startDate": "2023-09-18",
         "endDate": "2023-09-18",
         "startTime": "18:00",
@@ -124,13 +114,8 @@ public class EventService {
      */
     
     public Event createEvent(Map<String, String> payload, String username) {
-        System.out.println("Create event");
-
-
         Event event = new Event();
-        
         SequenceGeneratorService sequenceGenerator = new SequenceGeneratorService(mt);
-        
         event.setId(sequenceGenerator.generateSequence(Event.SEQUENCE_NAME));
 
         if (payload.get("title") != null) {
@@ -160,13 +145,13 @@ public class EventService {
         if (payload.get("startTime") != null) {
             event.setStartTime(payload.get(("startTime") ));
         } else {
-           event.setStartTime(LocalTime.now().toString()); //TODO: Onko tässä järkeääää; sets the default start time to now  
+           event.setStartTime(LocalTime.now().toString()); //sets the default start time to now  
         }
 
         if (payload.get("endTime") != null) {
             event.setEndTime(payload.get(("endTime") ));
         } else {
-           event.setEndTime(LocalTime.now().plusHours(1).toString()); //TODO: Onko tässäkään järkeääää; sets the default start time to exactly 1 hour from now
+           event.setEndTime(LocalTime.now().plusHours(1).toString()); //sets the default start time to exactly 1 hour from now
         }
 
         if (payload.get("location") != null) {
@@ -190,9 +175,7 @@ public class EventService {
         }
  
         event.setOrganizer(username);
-        //event.setParticipants(new ArrayList<Map<Long, String>>()); //TODO: ?
       
-
         eventRepository.save(event);
 
         return event;
