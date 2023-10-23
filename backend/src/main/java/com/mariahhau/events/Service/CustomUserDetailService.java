@@ -19,25 +19,10 @@ public class CustomUserDetailService implements UserDetailsService {
 
     private final UserServiceImpl userService;
 
-    //Huom. UserPrincipal implements UserDetails
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        System.out.println("CustomUserDetailService; loadUserByUsername  (kutsuu userserviceimpl.findUserByUsername)");
 
-        var user = userService.findUserByUsername(username).orElseThrow(); //TODO: throw mikä exception
-
-        System.out.println("loadUserByUsername: var user arvot " + user.toString());
-
-        System.out.print ("CustomUserDetailService: return UserPrincipal.builder ");
-      /*System.out.println( UserPrincipal.builder()
-            .userId(user.getId())
-            .username(user.getUsername())
-            .email(user.getEmail())
-            .authorities(List.of(new SimpleGrantedAuthority(user.getRole())))
-            .password(user.getPassword())
-            .build() + "\n\n");
-*/
-
+        var user = userService.findUserByUsername(username).orElseThrow(); 
 
         return UserPrincipal.builder()
             .userId(user.getId())

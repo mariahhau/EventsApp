@@ -14,10 +14,8 @@ public class JwtDecoder {
 
     private final JwtProperties properties;
 
-
-    //TODO tee tästä parempi
+    //TODO improve this
     public DecodedJWT decode(String token) {
-        System.out.println("JwtDecoder: " + token);
         return JWT.require(Algorithm.HMAC256(properties.getSecretKey()))
         .build()
         .verify(token);

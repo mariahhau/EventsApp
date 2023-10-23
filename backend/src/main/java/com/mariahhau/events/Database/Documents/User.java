@@ -34,7 +34,7 @@ public class User {
     @JsonIgnore
     private String password;
 
-    private String role; //TODO lisää rooleja (lista)
+    private String role; //TODO multiple roles?
 
 
 
