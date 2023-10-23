@@ -57,17 +57,13 @@ public class EventControllerTest {
         mockEvent.setEndTime("23:00");
         mockEvent.setLocation("Muumilaakso");
         mockEvent.setOrganizer("Hemuli");
-       
-        //Optional<Event> event = ;
         
         Mockito.when(eventService.singleEvent(Mockito.anyLong())).thenReturn(Optional.of(mockEvent));
-      
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders.get(
             "http://localhost:8080/api/events/1000").accept(MediaType.ALL);
 
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
-
 
         String expectedResult = """
             {\"id\":1000,
