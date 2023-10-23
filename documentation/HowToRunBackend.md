@@ -1,4 +1,5 @@
 First create  **.env** file in backend/src/main/resources directory. Use [.env.example](https://github.com/mariahhau/EventsApp/blob/main/backend/src/main/resources/.env.example) as a template. </br>
+You need to a MongoDB Atlas account and a database to connect to. [Instructions for MongoDB Atlas](https://www.mongodb.com/docs/atlas/getting-started/)</br>
 
 Running the app from command line (Windows)
 1. cd to \EventsApp\backend
