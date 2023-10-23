@@ -1,10 +1,7 @@
 package com.mariahhau.events.Database.Documents;
 
 import java.util.ArrayList;
-//import java.time.LocalDate;
-//import java.time.LocalTime;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.data.annotation.Id;
@@ -16,10 +13,10 @@ import lombok.Data;
 import lombok.NonNull;
 import lombok.NoArgsConstructor;
 
-@Document(collection = "events") //This class presents each document in the "events" collection in MongoDB
+@Document(collection = "events") //This class represents each document in the "events" collection in MongoDB
 @Data //generates getters and setters
 @AllArgsConstructor //generates a contructor that requires one argument for every field in the class 
-@NoArgsConstructor //generates a contructor that has no arguments 
+@NoArgsConstructor //generates a contructor with no arguments 
 public class Event {
 
     /*SEQUENCE_NAME is a reference to an auto-incrementing sequence number that stored in db_sequences collection in MongoDB
@@ -42,10 +39,10 @@ public class Event {
     private String location;
     private String image;
     private ArrayList<Participant> participants; 
-    private List<String> unregParticipants; // participants that have registered for an event without logging in
-    private int maxParticipants;
+    private List<String> unregParticipants; // participants that have registered for an event with email without logging in
+    private int maxParticipants = -1;
 
-    //@NoArgsConstructor //TODO miksi ei toimi
+
     @AllArgsConstructor
     private class Participant {
         private Long id;
@@ -60,7 +57,7 @@ public class Event {
         }
 
 
-        //TODO muuta tätä? tää palauttaa nyt true vaikka email olis eri että ilmoittautumisen voi perua pelkällä userId:llä 
+        // Returns true if id matches (email does not need to match) 
         @Override
         public boolean equals(Object o) {
 
@@ -79,8 +76,6 @@ public class Event {
             } else {
                 return false;
             }
-            
-
 
         }
 
@@ -94,45 +89,34 @@ public class Event {
    
     public boolean addParticipant(long userId, String email){
 
-        System.out.println("Event.addParticipant, userId:" + userId);
+        System.out.println("Add participant, userId:" + userId);
 
         if (participants == null) {
             participants = new ArrayList<Participant>();
         }
         
         if (maxParticipants >= 0 && this.getParticipantCount() >= maxParticipants) {
-            System.out.println("maxparticipants ylittyi");
             return false;
         }
         if (checkIfEmailExists(email)) {
             return false;
         }
-        System.out.println("tääl");
         participants.add(new Participant(userId, email));
-         System.out.println("nyt tääl");
+        
         return true;
     }
 
     //returns the Event object with updated participants list or an empty Optional if the participant was not found
     public Optional<Event> removeParticipant(long userId){
-    //public Event removeParticipant(long userId){
 
-        System.out.println("Event.removeParticipant, userId:" + userId);
+        System.out.println("RemoveParticipant, userId:" + userId);
 
-        /*if (!checkIfUserIdExists(userId)) {
-            System.out.println("User id was not found");
-            return Optional.empty();
-
-        }*/ //TODO tarviiko tätä tarkistusta olla erikseen
-        System.out.println("tääl");
         Participant p = new Participant(userId, null);
         if (participants.remove(p)) {
             return Optional.of(this);
 
         }
-          return Optional.empty();
-        
-        
+        return Optional.empty();
         
     }
 
@@ -144,7 +128,6 @@ public class Event {
         }
         
         if (maxParticipants >= 0 && this.getParticipantCount() >= maxParticipants) {
-            System.out.println("maxparticipants ylittyi");
             return false;
         }
 
@@ -155,6 +138,7 @@ public class Event {
         unregParticipants.add(email);
         return true;
     }
+
 
     public int getParticipantCount() {
         int count = 0;
@@ -171,29 +155,27 @@ public class Event {
 
     }
 
+
     public boolean checkIfEmailExists(String email) {
 
-        for (int i = 0; i < participants.size(); i++) { 
+        if (participants != null) {
+            for (int i = 0; i < participants.size(); i++) { 
             String temp = participants.get(i).getEmail();
-            if (temp != null && temp.equals(email)) { 
-                System.out.println("email löytyi participants");
-                return true;
-            }
-            
-            
+                if (temp != null && temp.equals(email)) { 
+                    return true;
+                }
+            }   
         }
 
-        for (int i = 0; i < unregParticipants.size(); i++) { 
-            String temp = unregParticipants.get(i);
-            
-            if (temp != null && temp.equals(email)){
-                System.out.println("email löytyi unregparticipants");
+        if (unregParticipants != null) {
+            for (int i = 0; i < unregParticipants.size(); i++) { 
+                String temp = unregParticipants.get(i);
+                if (temp != null && temp.equals(email)){
+                    return true;
+                }
                 
-                return true;
             }
-            
         }
-    
         
         return false;
 
@@ -204,12 +186,10 @@ public class Event {
 
         for (int i = 0; i < participants.size(); i++) { 
             if (participants.get(i).getId() == id) {
-                System.out.println("id löytyi");
                 return true;
             }
         }
         return false;
     }
     
-
 }
