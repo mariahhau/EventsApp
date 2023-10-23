@@ -112,7 +112,7 @@ public class Event {
         System.out.println("RemoveParticipant, userId:" + userId);
 
         Participant p = new Participant(userId, null);
-        if (participants.remove(p)) {
+        if (participants != null && participants.remove(p)) {
             return Optional.of(this);
 
         }
