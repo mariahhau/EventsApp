@@ -1,7 +1,49 @@
 **1. GET localhost:8080/api/events** - Get all events from the database
 
 Response: 200 OK  
-Response body:  ...
+Response body example:
+```
+[
+    {
+        "id": 17,
+        "title": "Bilbo's Birthday",
+        "description": "party with food, fireworks, dancing and much merriment",
+        "startDate": "2023-09-22",
+        "endDate": "2023-09-22",
+        "startTime": "17:00",
+        "endTime": "23:00",
+        "organizer": "Bilbo",
+        "location": "Shire",
+        "image": null,
+        "participants": [
+            {
+                "id": 13,
+                "email": "frodo@test.fi"
+            }
+        ],
+        "unregParticipants": [
+            "gandalf@test.fi"
+        ],
+        "maxParticipants": 100,
+        "participantCount": 2
+    },
+        "id": 18,
+        "title": "Movie night",
+        "description": "LOTR maraton",
+        "startDate": "2023-10-27",
+        "endDate": "2023-10-28",
+        "startTime": "15:00",
+        "endTime": "02:00",
+        "organizer": "Smeagol",
+        "location": "Living room",
+        "image": null,
+        "participants": null,
+        "unregParticipants": null,
+        "maxParticipants": 6,
+        "participantCount": 0
+    }
+]
+```
 
 
 </br></br></br>
@@ -9,19 +51,17 @@ Response body:  ...
 
 Requires an Authorization token (Bearer Token)   
 
-Request body:  
+Request body example:  
 ```
-{  
-
-    "title": "",
-    "description": "",
-    "startDate": "YYYY-MM-DD",
-    "endDate": "YYYY-MM-DD",
-    "startTime": "HH:MM",
-    "endTime": "HH:MM",
-    "location": "",
-    "image": "image url?",
-    "maxParticipants": int  
+{   
+    "title": "Movie night",
+    "description": "LOTR maraton",
+    "startDate": "2023-10-27",
+    "endDate": "2023-10-28",
+    "startTime": "15:00",
+    "endTime": "02:00",
+    "location": "Living room",
+    "maxParticipants": 6
 
 }  
 ```
@@ -30,24 +70,23 @@ Request body:
 </br>
 Response: 201 Created  
 
-Response body (example):  
+Response body example:  
 ```
 {  
-
-    "id": 9,
-    "title": "Halloween",
-    "description": "Halloween party :D",
-    "startDate": "2023-10-02",
-    "endDate": "2023-10-02",
-    "startTime": "12:03:04.299160300",
-    "endTime": "13:03:04.299160300",
-    "organizer": "tirppa",
-    "location": "",
+    "id": 18,
+    "title": "Movie night",
+    "description": "LOTR maraton",
+    "startDate": "2023-10-27",
+    "endDate": "2023-10-28",
+    "startTime": "15:00",
+    "endTime": "02:00",
+    "organizer": "Smeagol",
+    "location": "Living room",
     "image": null,
     "participants": null,
     "unregParticipants": null,
-    "maxParticipants": -1,
-    "participantCount": 0  
+    "maxParticipants": 6,
+    "participantCount": 0
 
 }
 ```
@@ -56,7 +95,26 @@ Response body (example):
 **3. GET localhost:8080/api/events/{id}**  - Get the information of a single event based on event id
 
 Response: 200 OK  
-Response body: ...
+Response body example: 
+```
+{  
+    "id": 18,
+    "title": "Movie night",
+    "description": "LOTR maraton",
+    "startDate": "2023-10-27",
+    "endDate": "2023-10-28",
+    "startTime": "15:00",
+    "endTime": "02:00",
+    "organizer": "Smeagol",
+    "location": "Living room",
+    "image": null,
+    "participants": null,
+    "unregParticipants": null,
+    "maxParticipants": 6,
+    "participantCount": 0
+
+}
+```
 
 </br></br></br>
 
@@ -64,17 +122,17 @@ Response body: ...
 
 Requires an Authorization token (Bearer Token) **OR** an email address  
 </br>
-If the client is not logged in (does not have a token), a request body is required:  
+If the client is not logged in (does not have a token), a request body is required, for example:  
 ```
 {  
 
-    "email":""  
+    "email":"test@test.com"  
 
 }
 ```
 </br>
 Response: 201 Created</br>  
-Response body:   ...
+Response body: Registration was successful
 
 
 </br></br></br>
@@ -85,9 +143,8 @@ Requires an Authorization token (Bearer Token)
 No request body  
 
 
-Response: 200 OK
-
-Registration cancelled successfully  
+Response: 200 OK</br>
+Response body: Registration cancelled successfully  
 
 </br></br></br>
 **6. POST localhost:8080/api/login** - Log in with username and password.  
@@ -105,7 +162,7 @@ Request body:
 }
 ```
 </br></br>
-Response: 200 OK   
+Response: 200 OK</br>
 Response body:
 ```
 {    
@@ -130,7 +187,7 @@ Request body:
 
 
 Response: 201 Created  </br>
-User created successfully  
+Response body: User created successfully  
   
 </br></br></br>
 
