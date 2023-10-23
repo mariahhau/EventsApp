@@ -11,7 +11,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
-@Document(collection = "users") //This class presents each document in the "users" collection in MongoDB
+@Document(collection = "users") //This class represents each document in the "users" collection in MongoDB
 @Data //generates getters and setters
 @AllArgsConstructor //generates a contructor that requires one argument for every field in the class
 @NoArgsConstructor //generates a contructor that has no arguments 
