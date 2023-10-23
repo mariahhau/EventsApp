@@ -22,9 +22,11 @@ import com.mariahhau.events.Database.Documents.Event;
 import com.mariahhau.events.Security.UserPrincipal;
 import com.mariahhau.events.Service.EventService;
 
-@RestController // Marks this class as a request handler (@RestController combines @Controller and @ResponseBody)
+import lombok.AllArgsConstructor;
 
-@RequestMapping("api/events")
+@RestController // Marks this class as a request handler (@RestController combines @Controller and @ResponseBody)
+@RequestMapping("/api/events")
+@AllArgsConstructor
 public class EventController {
 
     @Autowired
@@ -32,6 +34,7 @@ public class EventController {
 
     @GetMapping
     public ResponseEntity<List<Event>> getAllEvents() {
+        System.out.println(eventService);
         return new ResponseEntity<List<Event>>(eventService.allEvents(), HttpStatus.OK);
     }
 
@@ -55,16 +58,12 @@ public class EventController {
     public ResponseEntity<String> registerToEvent(@PathVariable long id, @AuthenticationPrincipal UserPrincipal principal, @RequestBody Optional<Map<String, String>> payload) {     
 
         if (principal == null){
-            System.out.println("principal was null \n\n");
-
             if (payload != null) {
                 if (payload.get().get("email") != null ) {
                     String email = payload.get().get("email");
                     if (Utilities.validateEmail(email)) {
-                        System.out.println("Valid email");
-                        if (eventService.registerToEvent(id, email) == 0){
-                            System.out.println("Registration with email was successfullll");
-                              return new ResponseEntity<String>("Registration was successful", HttpStatus.CREATED);
+                        if (eventService.registerForEvent(id, email) == 0){
+                            return new ResponseEntity<String>("Registration was successful", HttpStatus.CREATED);
 
                         }
 
@@ -75,10 +74,8 @@ public class EventController {
             return new ResponseEntity<String>("Registration failed", HttpStatus.INTERNAL_SERVER_ERROR);
 
         } else {
-             System.out.println(principal.toString());
 
-         if (eventService.registerToEvent(id, principal.getUserId(), principal.getEmail()) == 0) {
-            
+         if (eventService.registerForEvent(id, principal.getUserId(), principal.getEmail()) == 0) {
             return new ResponseEntity<String>("Registration was successful", HttpStatus.CREATED);
         } else return new ResponseEntity<String>("Registration failed", HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -89,18 +86,13 @@ public class EventController {
     public ResponseEntity<String> cancelRegistrationForEvent(@PathVariable long id, @AuthenticationPrincipal UserPrincipal principal) {     
 
         if (principal == null){
-            System.out.println("principal was null \n\n");
-
             return new ResponseEntity<String>("Cancellation failed", HttpStatus.INTERNAL_SERVER_ERROR);
 
         } else {
-
             if (eventService.cancelRegistrationForEvent(id, principal.getUserId()) == 0) {
-            
-            return new ResponseEntity<String>("Registration cancelled successfully", HttpStatus.OK);
-        } else return new ResponseEntity<String>("Cancellation failed", HttpStatus.INTERNAL_SERVER_ERROR);
+                return new ResponseEntity<String>("Registration cancelled successfully", HttpStatus.OK);
+            } else return new ResponseEntity<String>("Cancellation failed", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
     
 }
