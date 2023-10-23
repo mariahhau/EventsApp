@@ -5,7 +5,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.Data;
 
-@Document(collection = "db_sequences") //This class presents each document in the "db_sequences" collection in MongoDB.
+@Document(collection = "db_sequences") //This class represents each document in the "db_sequences" collection in MongoDB.
 @Data
 public class DatabaseSequence {
 
